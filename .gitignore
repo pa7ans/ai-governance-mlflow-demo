@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual env
+.venv/
+venv/
+
+# MLflow local tracking
+mlruns/
+mlflow.db
+
+# Local artifacts
+artifacts/
+
+# OS files
+.DS_Store
+Thumbs.db
