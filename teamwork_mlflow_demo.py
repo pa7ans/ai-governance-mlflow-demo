@@ -1,12 +1,12 @@
 ﻿"""
-MLflow demo (Applied AI teamwork)
-Idea: show AI governance in practice with traceability + evidence.
+MLflow demo - Applied AI teamwork
+To show AI governance in practice with traceability + evidence.
 
-We run a few simple experiments and log:
-- params (what we changed)
-- metrics (accuracy, f1_macro)
-- artifacts (confusion matrix + risk note + run summary)
-- tags (lightweight governance metadata)
+Run a few simple experiments and log:
+- params -> what we changed
+- metrics -> accuracy, f1_macro
+- artifacts -> confusion matrix + risk note + run summary
+- tags -> lightweight governance metadata
 """
 
 from __future__ import annotations
@@ -25,7 +25,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 
 
-# ---- Small config you can personalize ----
+# Small config to personalize
 EXPERIMENT_NAME = "AI_Governance_MLflow_Demo"
 TEAM_TAG = "Group O"  # group tag
 OWNER_TAG = "Nuutti & Saska"  # name for accountability
@@ -64,7 +64,7 @@ def run_and_log(run_name: str, model, params: dict, risk_note: str) -> None:
     X_train, X_test, y_train, y_test = get_data()
 
     with mlflow.start_run(run_name=run_name):
-        # --- governance metadata ---
+        # governance metadata
         mlflow.set_tag("team", TEAM_TAG)
         mlflow.set_tag("owner", OWNER_TAG)
         mlflow.set_tag("dataset", "sklearn: iris")
@@ -73,21 +73,21 @@ def run_and_log(run_name: str, model, params: dict, risk_note: str) -> None:
         mlflow.set_tag("approved", "false")
         mlflow.set_tag("timestamp", datetime.now().isoformat(timespec="seconds"))
 
-        # --- params ---
+        # params
         for k, v in params.items():
             mlflow.log_param(k, v)
 
-        # --- train + predict ---
+        # train + predict
         model.fit(X_train, y_train)
         preds = model.predict(X_test)
 
-        # --- metrics ---
+        # metrics
         acc = accuracy_score(y_test, preds)
         f1 = f1_score(y_test, preds, average="macro")
         mlflow.log_metric("accuracy", acc)
         mlflow.log_metric("f1_macro", f1)
 
-        # --- artifacts (evidence) ---
+        # artifacts alias evidence
         cm_path = make_confusion_matrix_png(y_test, preds, run_name)
         mlflow.log_artifact(cm_path)
 
@@ -105,7 +105,7 @@ def run_and_log(run_name: str, model, params: dict, risk_note: str) -> None:
         )
         mlflow.log_artifact(summary_path)
 
-        # Log the model too (optional )
+        # For logging the model
         mlflow.sklearn.log_model(model, artifact_path="model")
 
         print(f"{run_name}: accuracy={acc:.3f}, f1_macro={f1:.3f}")
@@ -114,7 +114,7 @@ def run_and_log(run_name: str, model, params: dict, risk_note: str) -> None:
 def main() -> None:
     mlflow.set_experiment(EXPERIMENT_NAME)
 
-    # Run 1: simple baseline
+    # Run 1: logistics regression
     run_and_log(
         run_name="logreg_baseline",
         model=LogisticRegression(C=1.0, max_iter=200),
@@ -138,7 +138,7 @@ def main() -> None:
         ),
     )
 
-    # Run 3: random forest v2 (small parameter change)
+    # Run 3: random forest v2 + small parameter change
     run_and_log(
         run_name="random_forest_v2",
         model=RandomForestClassifier(n_estimators=200, max_depth=2, random_state=42),
