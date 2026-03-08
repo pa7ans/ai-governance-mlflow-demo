@@ -1,4 +1,4 @@
-# AI Governance & Responsible AI ! MLflow Demo 1
+# AI Governance & Responsible AI (MLflow Demo)
 
 This repository contains a small MLflow demo created for an Applied AI teamwork assignment.
 The goal is to demonstrate AI governance in practice: traceability, documentation, and lightweight accountability.
