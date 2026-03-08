@@ -23,13 +23,16 @@ The goal is to demonstrate AI governance in practice: traceability, documentatio
    .\.venv\Scripts\Activate.ps1
 
 2. Install dependencies:
+   ```powershell
    python -m pip install --upgrade pip
    python -m pip install mlflow scikit-learn pandas matplotlib
 
 3. Run the demo script:
+   ```powershell
    python .\teamwork_mlflow_demo.py
 
 4. Start MLflow UI:
+   ```powershell
    python -m mlflow ui
 
 5. Open in browser:
